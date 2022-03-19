@@ -1,0 +1,7 @@
+{
+  "name": "bibleguesser",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
