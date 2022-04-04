@@ -1,0 +1,6 @@
+{
+	"appId": "com.bibleguesser",
+	"appName": "bibleguesser",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

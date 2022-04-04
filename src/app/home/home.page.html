@@ -1,20 +1,138 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="false">
   <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button (click)="reset()" >
+        <ion-icon  slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>
-      Blank
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-icon name="heart-outline"></ion-icon>{{lifes}}
+            <ion-icon name="diamond-outline"></ion-icon>{{points}}
+            <ion-icon name="trophy-outline"></ion-icon>{{highscore}}
+          </ion-col>
+          <ion-col [class.no-time]="counter == 0" class="time" *ngIf="mode">
+            <ion-icon name="time-outline"></ion-icon>{{counter}}s
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" [scrollEvents]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large"></ion-title>
     </ion-toolbar>
   </ion-header>
 
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+
+    <ion-grid *ngIf="mode == 1 && !timerActive && !timerStarted" class="select-mode">
+      <ion-row>
+        <ion-col><ion-button (click)="toggleTimer()" class="back">Ich bin bereit!</ion-button></ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngIf="mode == null" class="select-mode">
+      <ion-row>
+        <ion-col>
+          <ion-button class="back" (click)="selectMode(0)"> Unendlich Modus </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button class="back" (click)="selectMode(1)"> 3 Minuten </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <div *ngIf="mode == 0 || (mode == 1 && timerStarted)">
+      <ion-grid class="search">
+        <ion-row>
+          <ion-col> Wo stammt dieser Vers her?</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <strong class="search-vers"
+              >{{versSearched.cap[0].verses[0].vers}}</strong
+            >
+            <p *ngIf="showResult" class="source">
+              {{versSearched.name}}
+              {{versSearched.cap[0].numb}}:{{versSearched.cap[0].verses[0].numb}}
+            </p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <hr />
+      <div *ngIf="showResult" class="guess">
+        <ion-grid>
+          <ion-row>
+            <ion-col> Der von dir geratene Vers ist: </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <strong class="guess-vers">{{versSelected.vers}}</strong>
+              <p class="source">
+                {{bookSelected.name}} {{capSelected.numb}}:{{versSelected.numb}}
+              </p>
+            </ion-col>
+          </ion-row>
+          <hr />
+          <ion-row>
+            <ion-col [innerHTML]="versesTraveled"> </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="acc" [innerHTML]="drawTimeBeam()"> </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-button (click)="reload()" class="tryagain"
+                >Weiter</ion-button
+              >
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <div *ngIf="!showResult">
+        <h5>HEBRÄISCH-ARAMÄISCHE SCHRIFTEN</h5>
+        <div *ngIf="!bookSelected" class="books">
+          <ion-grid>
+            <ion-col *ngFor="let book of bible.books">
+              <h5 *ngIf="book.name == 'Matthäus'">CHRISTLICHE GRIECHISCHE SCHRIFTEN</h5>
+              <ion-button size="small" (click)="selectBook(book)" class="book">
+                {{book.name}}
+              </ion-button>
+            </ion-col>
+          </ion-grid>
+        </div>
+
+        <div *ngIf="bookSelected && !capSelected" class="caps">
+          <p>Kapitel</p>
+          <ion-button (click)="back()" class="back"> Zurück </ion-button>
+          <ion-grid>
+            <ion-col *ngFor="let cap of getCaps()">
+              <ion-button (click)="selectCap(cap)" class="cap">
+                {{cap.numb}}
+              </ion-button>
+            </ion-col>
+          </ion-grid>
+        </div>
+
+        <div *ngIf="capSelected" class="verses">
+          <p>Vers</p>
+          <ion-button (click)="back()" class="back"> Zurück </ion-button>
+          <ion-grid>
+            <ion-col *ngFor="let vers of getVerses()">
+              <ion-button (click)="selectVers(vers)" class="vers">
+                {{vers.numb}}
+              </ion-button>
+            </ion-col>
+          </ion-grid>
+        </div>
+      </div>
+    </div>
   </div>
 </ion-content>

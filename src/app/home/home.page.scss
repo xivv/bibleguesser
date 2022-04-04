@@ -4,8 +4,6 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
 #container strong {
@@ -24,4 +22,81 @@
 
 #container a {
   text-decoration: none;
+}
+
+.book {
+  --background: blueviolet;
+  color: white;
+  height: 45px;
+  width: 180px;
+
+  @media only screen and (max-width: 600px) {
+    width: 110px;
+    font-size: 12px;
+  }
+}
+
+.cap {
+  --background: rgb(46, 15, 75);
+  color: white;
+  height: 50px;
+  width: 50px;
+}
+
+.vers {
+  --background: rgb(46, 15, 75);
+  color: white;
+  height: 50px;
+  width: 50px;
+}
+
+.guess-vers {
+  background-color: rgb(46, 15, 75);
+  color: white;
+}
+
+.tryagain {
+  --background: rgb(13, 71, 11);
+  width: 150px;
+}
+
+.acc {
+  font-weight: bolder;
+}
+
+.guess-acc {
+  color: blueviolet;
+}
+.vers-acc {
+  color: rgb(13, 71, 11);
+}
+
+.extramessage {
+  background-color: #581717;
+  color: white;
+}
+
+.back {
+  --background: rgb(102, 32, 167);
+  color: white !important;
+  width: 150px;
+}
+
+.time {
+  background-color: rgb(13, 71, 11);
+}
+
+.no-time{
+  background-color: #581717;
+  color: white;
+}
+
+hr {
+  background-color: rgb(102, 32, 167);
+}
+
+.path {
+  --background: rgb(46, 15, 75);
+  height: 5px;
+  width: 5px;
 }
