@@ -32,7 +32,6 @@
 
   @media only screen and (max-width: 600px) {
     width: 110px;
-    font-size: 12px;
   }
 }
 
@@ -48,6 +47,20 @@
   color: white;
   height: 50px;
   width: 50px;
+}
+
+.timebeam {
+  height: 40px !important;
+  width: 15px !important;
+  margin: 5px;
+}
+
+.selected {
+  --background: rgb(13, 71, 11);
+}
+
+.searching {
+  --background: blueviolet
 }
 
 .guess-vers {
@@ -71,15 +84,18 @@
   color: rgb(13, 71, 11);
 }
 
-.extramessage {
-  background-color: #581717;
+.result {
+  background-color: #8c1c31;
+  border: 1px solid #8c1c31;
   color: white;
+  padding: 5px;
+  margin: 10px;
 }
 
 .back {
   --background: rgb(102, 32, 167);
   color: white !important;
-  width: 150px;
+  width: 170px;
 }
 
 .time {
@@ -99,4 +115,11 @@ hr {
   --background: rgb(46, 15, 75);
   height: 5px;
   width: 5px;
+}
+
+.search {
+  border: 1px solid #171717;
+  padding: 5px;
+  margin: 10px;
+  background-color: #171717;
 }

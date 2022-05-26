@@ -8,12 +8,12 @@
     <ion-title>
       <ion-grid>
         <ion-row>
-          <ion-col>
-            <ion-icon name="heart-outline"></ion-icon>{{lifes}}
+          <ion-col *ngIf="mode !== null">
+            <span  *ngIf="mode === 0"><ion-icon name="heart-outline"></ion-icon>{{lifes}}</span>
             <ion-icon name="diamond-outline"></ion-icon>{{points}}
             <ion-icon name="trophy-outline"></ion-icon>{{highscore}}
           </ion-col>
-          <ion-col [class.no-time]="counter == 0" class="time" *ngIf="mode">
+          <ion-col [class.no-time]="counter === 0" class="time" *ngIf="mode">
             <ion-icon name="time-outline"></ion-icon>{{counter}}s
           </ion-col>
         </ion-row>
@@ -31,13 +31,13 @@
 
   <div id="container">
 
-    <ion-grid *ngIf="mode == 1 && !timerActive && !timerStarted" class="select-mode">
+    <ion-grid *ngIf="mode === 1 && !timerActive && !timerStarted" class="select-mode">
       <ion-row>
         <ion-col><ion-button (click)="toggleTimer()" class="back">Ich bin bereit!</ion-button></ion-col>
       </ion-row>
     </ion-grid>
 
-    <ion-grid *ngIf="mode == null" class="select-mode">
+    <ion-grid *ngIf="mode === null" class="select-mode">
       <ion-row>
         <ion-col>
           <ion-button class="back" (click)="selectMode(0)"> Unendlich Modus </ion-button>
@@ -49,12 +49,12 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-    <div *ngIf="mode == 0 || (mode == 1 && timerStarted)">
-      <ion-grid class="search">
+    <div *ngIf="mode === 0 || (mode === 1 && timerStarted)">
+      <ion-grid>
         <ion-row>
           <ion-col> Wo stammt dieser Vers her?</ion-col>
         </ion-row>
-        <ion-row>
+        <ion-row class="search">
           <ion-col>
             <strong class="search-vers"
               >{{versSearched.cap[0].verses[0].vers}}</strong
@@ -72,20 +72,13 @@
           <ion-row>
             <ion-col> Der von dir geratene Vers ist: </ion-col>
           </ion-row>
-          <ion-row>
+          <ion-row  class="search">
             <ion-col>
               <strong class="guess-vers">{{versSelected.vers}}</strong>
               <p class="source">
                 {{bookSelected.name}} {{capSelected.numb}}:{{versSelected.numb}}
               </p>
             </ion-col>
-          </ion-row>
-          <hr />
-          <ion-row>
-            <ion-col [innerHTML]="versesTraveled"> </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col class="acc" [innerHTML]="drawTimeBeam()"> </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
@@ -94,6 +87,19 @@
               >
             </ion-col>
           </ion-row>
+          <hr />
+          <ion-row class="result">
+            <ion-col [innerHTML]="versesTraveled"> </ion-col>
+          </ion-row>
+          <ion-row>
+           <ion-grid>
+            <ion-col *ngFor="let book of bible.books">
+              <ion-button [ngClass]="{selected : book.name === bookSelected.name , searching : book.name === versSearched.name }" class="vers timebeam">
+                
+              </ion-button>
+            </ion-col>
+          </ion-grid>
+          </ion-row>
         </ion-grid>
       </div>
       <div *ngIf="!showResult">
@@ -101,7 +107,7 @@
         <div *ngIf="!bookSelected" class="books">
           <ion-grid>
             <ion-col *ngFor="let book of bible.books">
-              <h5 *ngIf="book.name == 'Matthäus'">CHRISTLICHE GRIECHISCHE SCHRIFTEN</h5>
+              <h5 *ngIf="book.name === 'Matthäus'">CHRISTLICHE GRIECHISCHE SCHRIFTEN</h5>
               <ion-button size="small" (click)="selectBook(book)" class="book">
                 {{book.name}}
               </ion-button>

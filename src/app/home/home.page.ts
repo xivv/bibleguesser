@@ -23,7 +23,8 @@ export class HomePage {
   public timerActive = false;
   public timerStarted = false;
 
-  public mode = null;
+  // null to enable 3 minute mode
+  public mode = 0;
   public points = 0;
   public lifes = 3;
   public highscore: number;
@@ -46,7 +47,7 @@ export class HomePage {
 
   selectVers(vers: Vers) {
     this.versSelected = vers;
-    if (this.mode == 1) {
+    if (this.mode === 1) {
       this.timerActive = false;
     }
     this.showResult = true;
@@ -55,7 +56,7 @@ export class HomePage {
 
   getCaps() {
     return this.bible.books.find(
-      (element) => element.name == this.bookSelected.name
+      (element) => element.name === this.bookSelected.name
     ).cap;
   }
 
@@ -76,11 +77,11 @@ export class HomePage {
 
     let extraMessage = '';
 
-    if (acc == 100) {
+    if (acc === 100) {
       this.lifes++;
       this.points += 5;
       extraMessage = `Wow! Du grabst wirklich tief nach dem Silber! <br> Du erhälst fünf Punkte und ein Leben`;
-    } else if (acc == 99) {
+    } else if (acc === 99) {
       extraMessage = `Sehr nah dran! Du erhälst drei Punkte (99%)`;
       this.points += 3;
     } else if (acc > 90) {
@@ -92,11 +93,11 @@ export class HomePage {
     } else {
       this.lifes--;
       extraMessage = `Leider zu weit entfernt! Erreiche mindestens 80%. Du verlierst ein Leben`;
-      if (this.lifes <= 0) {
+      if (this.lifes <= 0 && this.mode === 0) {
         if (this.highscore < this.points) {
           this.highscore = this.points;
           const highscoremMode =
-            this.mode == 0 ? 'highscore_endless' : 'highscore_timeAttack';
+            this.mode === 0 ? 'highscore_endless' : 'highscore_timeAttack';
           this.dataService.set(highscoremMode, this.points);
         }
         this.points = 0;
@@ -106,7 +107,7 @@ export class HomePage {
     }
 
     return (
-      `Du bist ${traveled} Verse entfernt gereist. Das entspricht einer Genauigkeit von ${acc}%!` +
+      `Du bist ${traveled} Verse entfernt. Das entspricht einer Genauigkeit von ${acc}%!` +
       '<br>' +
       `<span class="extramessage">` +
       extraMessage +
@@ -124,8 +125,8 @@ export class HomePage {
         const cap = book.cap[a];
 
         if (
-          book.name == this.versSearched.name &&
-          cap.numb == this.versSearched.cap[0].numb
+          book.name === this.versSearched.name &&
+          cap.numb === this.versSearched.cap[0].numb
         ) {
           position += this.versSearched.cap[0].verses[0].numb;
           return position;
@@ -145,8 +146,8 @@ export class HomePage {
       for (let a = 0; a < book.cap.length; a++) {
         const cap = book.cap[a];
         if (
-          book.name == this.bookSelected.name &&
-          cap.numb == this.capSelected.numb
+          book.name === this.bookSelected.name &&
+          cap.numb === this.capSelected.numb
         ) {
           position += this.versSelected.numb;
           return position;
@@ -156,30 +157,6 @@ export class HomePage {
       }
     }
     return -1;
-  }
-
-  drawTimeBeam() {
-    const positionOfSearched = this.getPositionOfVersSearched();
-    const positionOfSelected = this.getPositionOfVersSelected();
-
-    const max = 50;
-    const multiplicator = this.bible.totalVerses / max;
-    const selected = Math.round(positionOfSelected / multiplicator);
-    const searched = Math.round(positionOfSearched / multiplicator);
-
-    let acc = '';
-
-    for (let index = 0; index < max; index++) {
-      if (index == selected) {
-        acc += `<span class="guess-acc">O</span>`;
-      } else if (index === searched) {
-        acc += `<span class="vers-acc">O</span>`;
-      } else {
-        acc += `-`;
-      }
-    }
-
-    return acc;
   }
 
   reload() {
@@ -204,11 +181,12 @@ export class HomePage {
     this.mode = mode;
 
     const highscoremMode =
-      this.mode == 0 ? 'highscore_endless' : 'highscore_timeAttack';
+      this.mode === 0 ? 'highscore_endless' : 'highscore_timeAttack';
     this.highscore = await this.dataService.get(highscoremMode);
-    if (this.highscore == null) {
+    if (this.highscore === null) {
       this.highscore = 0;
     }
+    this.lifes = 3;
   }
 
   toggleTimer(){
@@ -221,7 +199,7 @@ export class HomePage {
   }
 
   timer() {
-    let intervalId = setInterval(() => {
+    const intervalId = setInterval(() => {
       if (this.timerActive) {
         this.counter = this.counter - 1;
       }
