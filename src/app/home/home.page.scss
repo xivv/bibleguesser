@@ -10,6 +10,17 @@
   }
 }
 
+.book-small {
+  --background: #8a2be2;
+  color: white;
+  height: 50px;
+  width: 50px;
+
+  @media only screen and (max-width: 600px) {
+    width: 50px;
+  }
+}
+
 .cap {
   --background: rgb(46, 15, 75);
   color: white;

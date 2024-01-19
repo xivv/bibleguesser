@@ -47,20 +47,14 @@
     </ion-grid>
 
     <ion-grid *ngIf="mode === null">
-
-      <ion-row>
+      <ion-row class="search">
         <ion-col>
-        <br> Herzlich Wilkommen. 
-        <br> Möchtest du die Bibel besser kennenlernen? 
-        <br> Dann bist du hier genau richtig! 
-        <br> Dies ist ein einfaches Spiel, Verse zu erraten.
-        <br>
-        <br> 
-        <br> Aber Achtung! Du hast nur 3 Leben <ion-icon name="heart-outline"></ion-icon>
-        <br> Und das hier sind deine Punkte  <ion-icon name="diamond-outline"></ion-icon>
-        <br> Es gibt auch deinen persönlichen Highscore  <ion-icon name="trophy-outline"></ion-icon>
-        <br><br><br><br> PS: Die Bibel hat übrigends 31.096 Verse und 1.189 Kapitel.
-      </ion-col>
+          <br>"Wie viel besser ist es, sich Weisheit anzueignen als Gold! <br> Verständnis zu erlangen ist eher zu erwählen als Silber.
+          <br> (Sprüche 16:16)
+          <br /> Neue Welt Übersetzung <ion-icon name="book-outline"></ion-icon>
+          <br />
+          <br />
+        </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
@@ -76,6 +70,34 @@
           </ion-button>
         </ion-col>
       </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Einstellungen</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-item>
+                <ion-label>Bücherabkürzungen</ion-label>
+                <ion-checkbox (ionChange)="setShortName()"></ion-checkbox>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <br />
+          Leben
+          <ion-icon name="heart-outline"></ion-icon> <br />
+          Punkte
+          <ion-icon name="diamond-outline"></ion-icon> <br />
+          Highscore
+          <ion-icon name="trophy-outline"></ion-icon> <br /> <br />
+          Die Bibel hat übrigends 31.096 Verse und 1.189 Kapitel.
+         
+        </ion-col>
+      </ion-row>
     </ion-grid>
     <div *ngIf="mode === 0 || (mode === 1 && timerStarted)">
       <ion-grid>
@@ -84,14 +106,18 @@
         </ion-row>
         <ion-row class="search">
           <ion-col>
-            <strong *ngIf="versSearched.cap[0].verses[0] && showResult" class="search-vers extra-vers"
-              >{{versSearched.cap[0].verses[0].vers}} <br></strong
-            >
+            <strong
+              *ngIf="versSearched.cap[0].verses[0] && showResult"
+              class="search-vers extra-vers"
+              >{{versSearched.cap[0].verses[0].vers}} <br
+            /></strong>
             <strong class="search-vers"
               >{{versSearched.cap[0].verses[1].vers}}</strong
             >
-            <strong *ngIf="versSearched.cap[0].verses[2] && showResult" class="search-vers extra-vers"
-              ><br>{{versSearched.cap[0].verses[2].vers}}</strong
+            <strong
+              *ngIf="versSearched.cap[0].verses[2] && showResult"
+              class="search-vers extra-vers"
+              ><br />{{versSearched.cap[0].verses[2].vers}}</strong
             >
             <p *ngIf="showResult" class="source">
               {{versSearched.name}}
@@ -125,6 +151,7 @@
           <ion-row class="{{getResultClass()}}">
             <ion-col [innerHTML]="versesTraveled"> </ion-col>
           </ion-row>
+          <hr />
           <ion-grid> Alle Bibelbücher in ihrere Reihenfolge </ion-grid>
           <ion-row>
             <ion-grid>
@@ -147,8 +174,13 @@
               <h5 *ngIf="book.name === 'Matthäus'">
                 CHRISTLICHE GRIECHISCHE SCHRIFTEN
               </h5>
-              <ion-button size="small" (click)="selectBook(book)" class="book">
-                {{book.name}}
+              <ion-button
+                size="small"
+                (click)="selectBook(book)"
+                [ngClass]="{'book':!shortNames, 'book-small':shortNames}"
+                class="book"
+              >
+                {{getBookName(book)}}
               </ion-button>
             </ion-col>
           </ion-grid>

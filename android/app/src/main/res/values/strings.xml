@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Bibleguesser</string>
-    <string name="title_activity_main">Bibleguesser</string>
+    <string name="app_name">Bibelraten</string>
+    <string name="title_activity_main">Bibelraten</string>
     <string name="package_name">com.bibleguesser</string>
     <string name="custom_url_scheme">com.bibleguesser</string>
 </resources>

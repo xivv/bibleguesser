@@ -19,6 +19,8 @@ export class HomePage {
   public showResult = false;
   public versesTraveled;
 
+  public shortNames = false;
+
   public counter = 180;
   public timerActive = false;
   public timerStarted = false;
@@ -91,7 +93,7 @@ export class HomePage {
       this.showGreenFlash();
       extraMessage = `Du erhälst zwei Punkte (90%)`;
       this.points += 2;
-    } else if (acc > 80) {
+    } else if (acc >= 80) {
       this.showGreenFlash();
       extraMessage = `Du erhälst einen Punkt (80%)`;
       this.points++;
@@ -254,5 +256,87 @@ export class HomePage {
 
    showGreenFlash() {
     this.showFlash('green');
+  }
+
+  setShortName(){
+    this.shortNames = !this.shortNames;
+  }
+
+  getBookName(book: Book){
+
+    if(!this.shortNames){
+      return book.name;
+    }
+
+    const bibelBuecherMap = new Map([
+      ['1-Mose', '1Mo'],
+      ['2-Mose', '2Mo'],
+      ['3-Mose', '3Mo'],
+      ['4-Mose', '4Mo'],
+      ['5-Mose', '5Mo'],
+      ['Josua', 'Jos'],
+      ['Richter', 'Ri'],
+      ['Ruth', 'Ru'],
+      ['1-Samuel', '1Sa'],
+      ['2-Samuel', '2Sa'],
+      ['1-Könige', '1Kö'],
+      ['2-Könige', '2Kö'],
+      ['1-Chronika', '1Ch'],
+      ['2-Chronika', '2Ch'],
+      ['Esra', 'Esr'],
+      ['Nehemia', 'Ne'],
+      ['Esther', 'Est'],
+      ['Hiob', 'Hi'],
+      ['Psalmen', 'Ps'],
+      ['Sprüche', 'Spr'],
+      ['Prediger', 'Pr'],
+      ['Hohes-Lied', 'Hoh'],
+      ['Jesaja', 'Jes'],
+      ['Jeremia', 'Jer'],
+      ['Klagelieder', 'Klg'],
+      ['Hesekiel', 'Hes'],
+      ['Daniel', 'Da'],
+      ['Hosea', 'Hos'],
+      ['Joel', 'Joel'],
+      ['Amos', 'Am'],
+      ['Obadja', 'Ob'],
+      ['Jona', 'Jon'],
+      ['Micha', 'Mi'],
+      ['Nahum', 'Nah'],
+      ['Habakuk', 'Hab'],
+      ['Zephanja', 'Ze'],
+      ['Haggai', 'Hag'],
+      ['Sacharja', 'Sach'],
+      ['Maleachi', 'Mal'],
+      ['Matthäus', 'Mat'],
+      ['Markus', 'Mar'],
+      ['Lukas', 'Luk'],
+      ['Johannes', 'Joh'],
+      ['Apostelgeschichte', 'Apg'],
+      ['Römer', 'Rö'],
+      ['1-Korinther', '1Ko'],
+      ['2-Korinther', '2Ko'],
+      ['Galater', 'Gal'],
+      ['Epheser', 'Eph'],
+      ['Philipper', 'Php'],
+      ['Kolosser', 'Kol'],
+      ['1-Thessalonicher', '1Th'],
+      ['2-Thessalonicher', '2Th'],
+      ['1-Timotheus', '1Ti'],
+      ['2-Timotheus', '2Ti'],
+      ['Titus', 'Tit'],
+      ['Philemon', 'Phm'],
+      ['Hebräer', 'Heb'],
+      ['Jakobus', 'Jak'],
+      ['1-Petrus', '1Pe'],
+      ['2-Petrus', '2Pe'],
+      ['1-Johannes', '1Jo'],
+      ['2-Johannes', '2Jo'],
+      ['3-Johannes', '3Jo'],
+      ['Judas', 'Jud'],
+      ['Offenbarung', 'Off']
+    ]);
+
+    return bibelBuecherMap.get(book.name);
   }
 }
