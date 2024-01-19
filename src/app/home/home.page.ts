@@ -24,7 +24,7 @@ export class HomePage {
   public timerStarted = false;
 
   // null to enable 3 minute mode
-  public mode = 0;
+  public mode = null;
   public points = 0;
   public lifes = 3;
   public highscore: number;
@@ -128,7 +128,7 @@ export class HomePage {
           book.name === this.versSearched.name &&
           cap.numb === this.versSearched.cap[0].numb
         ) {
-          position += this.versSearched.cap[0].verses[0].numb;
+          position += this.versSearched.cap[0].verses[1].numb;
           return position;
         } else {
           position += cap.verses.length;
@@ -191,6 +191,7 @@ export class HomePage {
 
   toggleTimer(){
     this.timerActive = !this.timerActive;
+    console.log(this.timerActive);
     if(this.timerActive){
       this.counter = 180;
       this.timerStarted = true;

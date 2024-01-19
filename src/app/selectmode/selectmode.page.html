@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" [scrollEvents]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large"></ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+    <ion-grid>
+      <ion-row>
+        <ion-col
+          ><ion-button (click)="single()" class="back"
+            >Ich bin bereit!</ion-button
+          ></ion-col
+        >
+      </ion-row>
+      <ion-row>
+        <ion-col
+          ><ion-button (click)="group()" class="back"
+            ><ion-icon name="people-outline"></ion-icon></ion-button
+          ></ion-col
+        >
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
