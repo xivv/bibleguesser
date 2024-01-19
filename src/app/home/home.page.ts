@@ -22,6 +22,7 @@ export class HomePage {
   public counter = 180;
   public timerActive = false;
   public timerStarted = false;
+  public lastAcc = 0;
 
   // null to enable 3 minute mode
   public mode = null;
@@ -74,25 +75,30 @@ export class HomePage {
         ? positionOfSearched
         : this.bible.totalVerses - positionOfSearched;
     const acc = Math.floor(100 - (traveled / longedPossiblePath) * 100);
+    this.lastAcc = acc;
 
     let extraMessage = '';
-
     if (acc === 100) {
+      this.showSilverFlash();
       this.lifes++;
       this.points += 5;
       extraMessage = `Wow! Du grabst wirklich tief nach dem Silber! <br> Du erhälst fünf Punkte und ein Leben`;
     } else if (acc === 99) {
-      extraMessage = `Sehr nah dran! Du erhälst drei Punkte (99%)`;
+      this.showGreenFlash();
+      extraMessage = `Wow sehr nah dran! Du erhälst drei Punkte (99%)`;
       this.points += 3;
     } else if (acc > 90) {
+      this.showGreenFlash();
       extraMessage = `Du erhälst zwei Punkte (90%)`;
       this.points += 2;
     } else if (acc > 80) {
+      this.showGreenFlash();
       extraMessage = `Du erhälst einen Punkt (80%)`;
       this.points++;
     } else {
+      this.showRedFlash();
       this.lifes--;
-      extraMessage = `Leider zu weit entfernt! Erreiche mindestens 80%. Du verlierst ein Leben`;
+      extraMessage = `Leider zu weit entfernt! <br> Erreiche mindestens 80%. Du verlierst ein Leben`;
       if (this.lifes <= 0 && this.mode === 0) {
         if (this.highscore < this.points) {
           this.highscore = this.points;
@@ -107,12 +113,22 @@ export class HomePage {
     }
 
     return (
-      `Du bist ${traveled} Verse entfernt. Das entspricht einer Genauigkeit von ${acc}%!` +
+      `Du bist ${traveled} Verse entfernt. <br> Das entspricht einer Genauigkeit von ${acc}%!` +
       '<br>' +
       `<span class="extramessage">` +
       extraMessage +
       `</span>`
     );
+  }
+
+  getResultClass(){
+      if(this.lastAcc < 80){
+        return 'redresult';
+      } if(this.lastAcc === 100){
+        return 'silverresult';
+      }else{
+        return 'greenresult';
+      }
   }
 
   getPositionOfVersSearched(): number {
@@ -214,5 +230,29 @@ export class HomePage {
 
   reset(){
     window.location.reload();
+  }
+
+
+  showFlash(color){
+    const flashElement = document.createElement('div');
+    flashElement.classList.add(color+'flash');
+    document.body.appendChild(flashElement);
+
+    // Entfernen Sie das Element nach der Animation
+    flashElement.addEventListener('animationend', () => {
+      flashElement.remove();
+    });
+  }
+
+  showRedFlash(){
+    this.showFlash('red');
+  }
+
+  showSilverFlash(){
+    this.showFlash('silver');
+  }
+
+   showGreenFlash() {
+    this.showFlash('green');
   }
 }

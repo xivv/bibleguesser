@@ -63,7 +63,22 @@
   color: rgb(13, 71, 11);
 }
 
-.result {
+.silverresult {
+  background-color: #595959;
+  border: 1px solid #595959;
+  color: white;
+  padding: 5px;
+  margin: 10px;
+}
+
+.greenresult {
+  background-color:  rgb(13, 71, 11);
+  border: 1px solid  rgb(13, 71, 11);
+  color: white;
+  padding: 5px;
+  margin: 10px;
+}
+.redresult {
   background-color: #8c1c31;
   border: 1px solid #8c1c31;
   color: white;
@@ -101,4 +116,46 @@ hr {
   padding: 5px;
   margin: 10px;
   background-color: #171717;
+}
+
+.greenflash {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #094109; /* Grün, kann angepasst werden */
+  opacity: 0;
+  animation: flashAnimation 1s ease-out;
+}
+
+.silverflash {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #969696; /* Grün, kann angepasst werden */
+  opacity: 0;
+  animation: flashAnimation 1s ease-out;
+}
+
+.redflash {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #41090e; /* Grün, kann angepasst werden */
+  opacity: 0;
+  animation: flashAnimation 1s ease-out;
+}
+
+@keyframes flashAnimation {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
